@@ -19,6 +19,7 @@ own remember token. This way, you can logout a session without affecting the oth
   * [Prepare your authenticatable models](#prepare-your-authenticatable-models)
   * [Prepare your LoginController](#prepare-your-logincontroller)
   * [Add the routes](#add-the-routes)
+  * [Choose and install a user-agent parser](#choose-and-install-a-user-agent-parser)
 * [Configuration](#configuration)
 * [Usage](#usage)
   * [Retrieving the logins](#retrieving-the-logins)
@@ -148,6 +149,17 @@ Route::authTracker('security'); // Add the required routes under the prefix "sec
 ```php
 Route::apiAuthTracker('security'); // Add the required routes under the prefix "security"
 ```
+
+### Choose and install a user-agent parser
+
+This package relies on a User-Agent parser to extract the informations.
+
+Currently, it supports two of the most popular parsers:
+- WhichBrowser ([https://github.com/WhichBrowser/Parser-PHP](https://github.com/WhichBrowser/Parser-PHP))
+- Agent ([https://github.com/jenssegers/agent](https://github.com/jenssegers/agent))
+
+Before using the Auth Tracker, you need to choose a supported parser, install it and indicate in the configuration file which one you want
+to use.
 
 ## Configuration
 
