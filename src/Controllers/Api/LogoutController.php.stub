@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Http\Controllers\Auth\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class  LogoutController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+    public function logout(Request $request, $id = null)
+    {
+        if ($request->user()->logout($id)) {
+            return response(['message' => 'You logged out.']);
+        }
+
+        return response(['message' => 'Bad request.'], 400);
+    }
+
+    public function logoutAll(Request $request)
+    {
+        $request->user()->logoutAll();
+
+        return response(['message' => 'Accesses have been updated!']);
+    }
+
+    public function logoutOthers(Request $request)
+    {
+        $request->user()->logoutOthers();
+
+        return response(['message' => 'Accesses have been updated!']);
+    }
+}
