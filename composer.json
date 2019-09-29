@@ -11,7 +11,8 @@
         }
     ],
     "require": {
-        "php": "^7.1.3"
+        "php": "^7.1.3",
+        "anthonylajusticia/laravel-expirable": "dev-master"
     },
     "autoload": {
         "psr-4": {
