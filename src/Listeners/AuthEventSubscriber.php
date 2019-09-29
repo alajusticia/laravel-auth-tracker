@@ -17,53 +17,59 @@ class AuthEventSubscriber
 {
     public function handleSuccessfulLogin(LoginEvent $event)
     {
-        if (Auth::viaRemember()) {
-            // Logged in via remember token
+        if ($this->tracked($event->user)) {
 
-            if (! is_null($recaller = $this->recaller())) {
+            if (Auth::viaRemember()) {
+                // Logged in via remember token
 
-                // Update session id
-                Login::where('remember_token', $recaller->token())->update([
-                    'session_id' => session()->getId()
-                ]);
-            }
-        } else {
-            // Initial login
+                if (!is_null($recaller = $this->recaller())) {
 
-            // Regenerate the session ID to avoid session fixation attacks
-            session()->regenerate();
-
-            // Get as much information as possible about the request
-            $context = new RequestContext;
-
-            // Build a new login
-            $login = LoginFactory::build($event, $context);
-
-            // Set the expiration date based on whether it is a remembered login or not
-            if ($event->remember) {
-                $login->expiresAt(Carbon::now()->addDays(config('auth_tracker.remember_lifetime', 365)));
+                    // Update session id
+                    Login::where('remember_token', $recaller->token())->update([
+                        'session_id' => session()->getId()
+                    ]);
+                }
             } else {
-                $login->expiresAt(Carbon::now()->addMinutes(config('session.lifetime')));
-            }
+                // Initial login
 
-            // Attach the login to the user and save it
-            $event->user->logins()->save($login);
+                // Regenerate the session ID to avoid session fixation attacks
+                session()->regenerate();
 
-            // Update the remember token
-            $this->updateRememberToken($event->user, Str::random(60));
+                // Get as much information as possible about the request
+                $context = new RequestContext;
 
-            // Notify the user by email that a login has just been made
-            if (config('auth_tracker.notify')) {
-                $event->user->notify(new LoggedIn($context));
+                // Build a new login
+                $login = LoginFactory::build($event, $context);
+
+                // Set the expiration date based on whether it is a remembered login or not
+                if ($event->remember) {
+                    $login->expiresAt(Carbon::now()->addDays(config('auth_tracker.remember_lifetime', 365)));
+                } else {
+                    $login->expiresAt(Carbon::now()->addMinutes(config('session.lifetime')));
+                }
+
+                // Attach the login to the user and save it
+                $event->user->logins()->save($login);
+
+                // Update the remember token
+                $this->updateRememberToken($event->user, Str::random(60));
+
+                // Notify the user by email that a login has just been made
+                if (config('auth_tracker.notify')) {
+                    $event->user->notify(new LoggedIn($context));
+                }
             }
         }
     }
 
     public function handleSuccessfulLogout($event)
     {
-        // Delete login
-        $event->user->logins()->where('session_id', session()->getId())
-            ->delete();
+        if ($this->tracked($event->user)) {
+
+            // Delete login
+            $event->user->logins()->where('session_id', session()->getId())
+                ->delete();
+        }
     }
 
     /**
@@ -96,6 +102,17 @@ class AuthEventSubscriber
         $user->setRememberToken($token);
         $user->timestamps = false;
         $user->save();
+    }
+
+    /**
+     * Tracking enabled for this user?
+     *
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @return bool
+     */
+    protected function tracked($user)
+    {
+        return in_array('AnthonyLajusticia\AuthTracker\Traits\AuthTracking', class_uses($user));
     }
 
     /**

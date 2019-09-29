@@ -20,25 +20,39 @@ class ApiAuthEventSubscriber
         $userModel = config('auth.providers.'.$provider.'.model');
         $user = call_user_func([$userModel, 'find'], $accessToken->user_id);
 
-        // Get as much information as possible about the request
-        $context = new RequestContext;
+        if ($this->tracked($user)) {
 
-        // Build a new login
-        $login = LoginFactory::build($event, $context);
+            // Get as much information as possible about the request
+            $context = new RequestContext;
 
-        // Set the expiration date
-        $login->expiresAt($accessToken->expires_at);
+            // Build a new login
+            $login = LoginFactory::build($event, $context);
 
-        // Attach the login to the user and save it
-        $user->logins()->save($login);
+            // Set the expiration date
+            $login->expiresAt($accessToken->expires_at);
 
-        // Notify the user by email that a login has just been made
-        // (just the initial logins, not when refresh token)
-        if (config('auth_tracker.notify') &&
-            request()->input('grant_type') !== 'refresh_token') {
+            // Attach the login to the user and save it
+            $user->logins()->save($login);
 
-            $user->notify(new LoggedIn($context));
+            // Notify the user by email that a login has just been made
+            // (just the initial logins, not when refresh token)
+            if (config('auth_tracker.notify') &&
+                request()->input('grant_type') !== 'refresh_token') {
+
+                $user->notify(new LoggedIn($context));
+            }
         }
+    }
+
+    /**
+     * Tracking enabled for this user?
+     *
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @return bool
+     */
+    protected function tracked($user)
+    {
+        return in_array('AnthonyLajusticia\AuthTracker\Traits\AuthTracking', class_uses($user));
     }
 
     /**
