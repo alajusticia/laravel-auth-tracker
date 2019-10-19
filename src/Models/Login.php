@@ -31,6 +31,21 @@ class Login extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'authenticatable_type',
+        'authenticatable_id',
+        'session_id',
+        'remember_token',
+        'oauth_access_token_id',
+        'expires_at',
+        'deleted_at',
+    ];
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array
