@@ -32,6 +32,9 @@ class AuthEventSubscriber
             } else {
                 // Initial login
 
+                // Notification enabled?
+                $notify = session('auth_tracker_notify', config('auth_tracker.notify'));
+
                 // Regenerate the session ID to avoid session fixation attacks
                 session()->regenerate();
 
@@ -55,7 +58,7 @@ class AuthEventSubscriber
                 $this->updateRememberToken($event->user, Str::random(60));
 
                 // Notify the user by email that a login has just been made
-                if (config('auth_tracker.notify')) {
+                if ($notify) {
                     $event->user->notify(new LoggedIn($context));
                 }
             }

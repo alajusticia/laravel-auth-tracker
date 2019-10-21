@@ -450,6 +450,22 @@ the device and IP address informations.
 
 Executing the `php artisan auth-tracker:install` command, you get an example of what this notification might look like.
 
+### On demand
+
+Regardless the notify option in the configuration file, you can enable or disable the notifications on demand by
+setting a key named `auth_tracker_notify` in the session with the value `true` or `false`.
+
+It might be useful, for example, when you want to auto login a new user who has just registered.
+In this case it would be useless to send a notification to tell the user that a new login occured:
+
+```php
+// Temporarily disable notifications of the auth tracker
+$request->session()->flash('auth_tracker_notify', false);
+
+// Auto login without notification
+Auth::login($user);
+```
+
 ## The RequestContext object
 
 In your notification, you can rely on a `RequestContext` object containing all the informations collected on the request.
