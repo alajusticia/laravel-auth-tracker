@@ -45,11 +45,6 @@ class AuthTrackerServiceProvider extends ServiceProvider
         // Load migrations
         $this->loadMigrationsFrom(__DIR__.'/../migrations');
 
-        // Publish notifications
-        $this->publishes([
-            __DIR__.'/Notifications/LoggedIn.php.stub' => app_path('Notifications/LoggedIn.php'),
-        ], 'notifications');
-
         // Publish controllers
         $this->publishes([
             __DIR__.'/Controllers/LoginController.php.stub' => app_path('Http/Controllers/Auth/LoginController.php'),

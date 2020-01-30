@@ -34,12 +34,9 @@ class ApiAuthEventSubscriber
             // Attach the login to the user and save it
             $user->logins()->save($login);
 
-            // Notify the user by email that a login has just been made
-            // (just the initial logins, not when refresh token)
-            if (config('auth_tracker.notify') &&
-                request()->input('grant_type') !== 'refresh_token') {
+            if (request()->input('grant_type') !== 'refresh_token') {
 
-                $user->notify(new LoggedIn($context));
+                event(new \AnthonyLajusticia\AuthTracker\Events\Login($context));
             }
         }
     }

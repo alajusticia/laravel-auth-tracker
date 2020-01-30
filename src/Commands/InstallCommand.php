@@ -50,7 +50,6 @@ class InstallCommand extends Command
                 $this->callSilent('vendor:publish', ['--tag' => 'api-controllers']);
         }
 
-        $this->callSilent('vendor:publish', ['--tag' => 'notifications']);
         $this->callSilent('vendor:publish', ['--tag' => 'translations']);
 
         $this->comment('Auth Tracker scaffolding installed successfully.');

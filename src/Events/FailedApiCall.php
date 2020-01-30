@@ -4,12 +4,10 @@ namespace AnthonyLajusticia\AuthTracker\Events;
 
 use GuzzleHttp\Exception\TransferException;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
 
 class FailedApiCall
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use SerializesModels;
 
     public $exception;
 

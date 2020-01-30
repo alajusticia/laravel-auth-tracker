@@ -57,10 +57,7 @@ class AuthEventSubscriber
                 // Update the remember token
                 $this->updateRememberToken($event->user, Str::random(60));
 
-                // Notify the user by email that a login has just been made
-                if ($notify) {
-                    $event->user->notify(new LoggedIn($context));
-                }
+                event(new \AnthonyLajusticia\AuthTracker\Events\Login($context));
             }
         }
     }

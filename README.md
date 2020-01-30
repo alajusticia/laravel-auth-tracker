@@ -246,26 +246,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Notify
-    |--------------------------------------------------------------------------
-    |
-    | Enable to send a notification to the user, each time a login is made
-    | on his account.
-    | It gives users the possibility to be notified immediately and to be able
-    | to check the login informations and detect any unauthorized login.
-    |
-    | It will look for a "app/Notifications/LoggedIn.php" notification file,
-    | you can get an example by installing the provided scaffolding (with the
-    | "php artisan auth-tracker:install" command).
-    |
-    | boolean
-    |
-    */
-
-    'notify' => true,
-
-    /*
-    |--------------------------------------------------------------------------
     | IP Address Lookup
     |--------------------------------------------------------------------------
     |
@@ -442,35 +422,15 @@ Route::namespace('Auth\Api')->prefix($prefix)->group(function () {
 });
 ```
 
-## Notifications
+## Events
 
-If you set the option `notify` to `true` in the configuration file, the package will look for a
-`App\Notifications\LoggedIn` file and send a notification to the user on each new login with
-the device and IP address informations.
+### Login
 
-Executing the `php artisan auth-tracker:install` command, you get an example of what this notification might look like.
+On a new login, you can listen to the event `AnthonyLajusticia\AuthTracker\Events\Login`.
+It receives a `RequestContext` object containing all the informations collected on the request, accessible on the event
+with the `context` property.
 
-### On demand
-
-Regardless the notify option in the configuration file, you can enable or disable the notifications on demand by
-setting a key named `auth_tracker_notify` in the session with the value `true` or `false`.
-
-It might be useful, for example, when you want to auto login a new user who has just registered.
-In this case it would be useless to send a notification to tell the user that a new login occured:
-
-```php
-// Temporarily disable notifications of the auth tracker
-$request->session()->flash('auth_tracker_notify', false);
-
-// Auto login without notification
-Auth::login($user);
-```
-
-## The RequestContext object
-
-In your notification, you can rely on a `RequestContext` object containing all the informations collected on the request.
-
-Attributes available:
+Properties available:
 ```php
 $this->context->userAgent; // The full, unparsed, User-Agent header
 $this->context->ip; // The IP address
@@ -484,18 +444,18 @@ $this->context->ip(); // Returns the IP address lookup provider
 
 Methods available in the parser:
 ```php
-$this->context->getDevice(); // The name of the device (MacBook...)
-$this->context->getDeviceType(); // The type of the device (desktop, mobile, tablet, phone...)
-$this->context->getPlatform(); // The name of the platform (macOS...)
-$this->context->getBrowser(); // The name of the browser (Chrome...)
+$this->context->parser()->getDevice(); // The name of the device (MacBook...)
+$this->context->parser()->getDeviceType(); // The type of the device (desktop, mobile, tablet, phone...)
+$this->context->parser()->getPlatform(); // The name of the platform (macOS...)
+$this->context->parser()->getBrowser(); // The name of the browser (Chrome...)
 ```
 
 Methods available in the IP address lookup provider:
 ```php
-$this->context->getCountry(); // The name of the country
-$this->context->getRegion(); // The name of the region
-$this->context->getCity(); // The name of the city
-$this->context->getResult(); // The entire result of the API call as a Laravel collection
+$this->context->ip()->getCountry(); // The name of the country
+$this->context->ip()->getRegion(); // The name of the region
+$this->context->ip()->getCity(); // The name of the city
+$this->context->ip()->getResult(); // The entire result of the API call as a Laravel collection
 
 // And all your custom methods in the case of a custom provider
 ```

@@ -45,26 +45,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Notify
-    |--------------------------------------------------------------------------
-    |
-    | Enable to send a notification to the user, each time a login is made
-    | on his account.
-    | It gives users the possibility to be notified immediately and to be able
-    | to check the login informations and detect any unauthorized login.
-    |
-    | It will look for a "app/Notifications/LoggedIn.php" notification file,
-    | you can get an example by installing the provided scaffolding (with the
-    | "php artisan auth-tracker:install" command).
-    |
-    | boolean
-    |
-    */
-
-    'notify' => true,
-
-    /*
-    |--------------------------------------------------------------------------
     | IP Address Lookup
     |--------------------------------------------------------------------------
     |
