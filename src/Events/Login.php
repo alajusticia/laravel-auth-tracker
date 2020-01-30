@@ -3,12 +3,25 @@
 namespace AnthonyLajusticia\AuthTracker\Events;
 
 use AnthonyLajusticia\AuthTracker\RequestContext;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Queue\SerializesModels;
 
 class Login
 {
     use SerializesModels;
 
+    /**
+     * The user.
+     *
+     * @var Authenticatable
+     */
+    public $user;
+
+    /**
+     * Informations about the request (user agent, ip address...).
+     *
+     * @var RequestContext
+     */
     public $context;
 
     /**
@@ -17,8 +30,9 @@ class Login
      * @param RequestContext $context
      * @return void
      */
-    public function __construct(RequestContext $context)
+    public function __construct(Authenticatable $user, RequestContext $context)
     {
+        $this->user = $user;
         $this->context = $context;
     }
 }

@@ -36,7 +36,7 @@ class ApiAuthEventSubscriber
 
             if (request()->input('grant_type') !== 'refresh_token') {
 
-                event(new \AnthonyLajusticia\AuthTracker\Events\Login($context));
+                event(new \AnthonyLajusticia\AuthTracker\Events\Login($user, $context));
             }
         }
     }

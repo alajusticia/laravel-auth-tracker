@@ -57,7 +57,7 @@ class AuthEventSubscriber
                 // Update the remember token
                 $this->updateRememberToken($event->user, Str::random(60));
 
-                event(new \AnthonyLajusticia\AuthTracker\Events\Login($context));
+                event(new \AnthonyLajusticia\AuthTracker\Events\Login($event->user, $context));
             }
         }
     }
