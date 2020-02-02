@@ -12,7 +12,7 @@
     ],
     "require": {
         "php": "^7.1.3",
-        "anthonylajusticia/laravel-expirable": "^1.0"
+        "alajusticia/laravel-expirable": "^1.0"
     },
     "autoload": {
         "psr-4": {
