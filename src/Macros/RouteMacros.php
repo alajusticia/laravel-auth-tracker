@@ -1,49 +1,28 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Macros;
+namespace ALajusticia\AuthTracker\Macros;
 
 use Illuminate\Support\Facades\Route;
 
 class RouteMacros
 {
     /**
-     * Get the routes for the web middleware.
+     * Get the routes for the Laravel Auth Tracker.
      *
      * @return \Closure
      */
     public function authTracker()
     {
-        return function ($prefix) {
-            Route::namespace('Auth')->prefix($prefix)->group(function () {
+        return function ($path) {
 
-                // Route to manage logins
-                Route::get('/', 'LoginController@listLogins')->name('auth_tracker.list');
+            // Route to manage logins
+            Route::get($path, 'Auth\AuthTrackingController@listLogins')->name('login.list');
 
-                // Logout routes
-                Route::post('logout/{id}', 'LogoutController@logout')->name('auth_tracker.logout');
-                Route::post('logout-all', 'LogoutController@logoutAll')->name('auth_tracker.logout.all');
-                Route::post('logout-others', 'LogoutController@logoutOthers')->name('auth_tracker.logout.others');
-            });
-        };
-    }
-
-    /**
-     * Get the routes for the api middleware.
-     *
-     * @return \Closure
-     */
-    public function apiAuthTracker()
-    {
-        return function ($prefix) {
-            Route::namespace('Auth\Api')->prefix($prefix)->group(function () {
-
-                // Routes to manage logins
-                Route::get('/', 'LoginController@listLogins')->name('auth_tracker.api.list');
-
-                // Logout routes
-                Route::get('logout/{id?}', 'LogoutController@logout')->name('auth_tracker.api.logout');
-                Route::get('logout-all', 'LogoutController@logoutAll')->name('auth_tracker.api.logout.all');
-                Route::get('logout-others', 'LogoutController@logoutOthers')->name('auth_tracker.api.logout.others');
+            // Logout routes
+            Route::middleware('auth')->group(function () {
+                Route::post('logout/all', 'Auth\LoginController@logoutAll')->name('logout.all');
+                Route::post('logout/others', 'Auth\LoginController@logoutOthers')->name('logout.others');
+                Route::post('logout/{id}', 'Auth\LoginController@logoutById')->where('id', '[0-9]+')->name('logout.id');
             });
         };
     }

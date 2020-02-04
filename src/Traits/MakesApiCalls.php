@@ -1,8 +1,8 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Traits;
+namespace ALajusticia\AuthTracker\Traits;
 
-use AnthonyLajusticia\AuthTracker\Events\FailedApiCall;
+use ALajusticia\AuthTracker\Events\FailedApiCall;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
 

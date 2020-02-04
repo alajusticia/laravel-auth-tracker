@@ -1,6 +1,6 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Traits;
+namespace ALajusticia\AuthTracker\Traits;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -8,17 +8,6 @@ use Illuminate\Http\Request;
 trait AuthenticatesWithTracking
 {
     use AuthenticatesUsers;
-
-    /**
-     * List all active logins for the current user.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
-     */
-    public function listLogins(Request $request)
-    {
-        return view('auth.list', ['logins' => $request->user()->logins->sortByDesc('is_current')]);
-    }
 
     /**
      * Send the response after the user was authenticated.
@@ -32,5 +21,36 @@ trait AuthenticatesWithTracking
 
         return $this->authenticated($request, $this->guard()->user())
             ?: redirect()->intended($this->redirectPath());
+    }
+
+    public function logoutById(Request $request, $id)
+    {
+        $request->user()->logout($id);
+
+        return $this->redirectToLoginsList();
+    }
+
+    public function logoutAll(Request $request)
+    {
+        $request->user()->logoutAll();
+
+        return $this->loggedOut($request) ?: redirect('/');
+    }
+
+    public function logoutOthers(Request $request)
+    {
+        $request->user()->logoutOthers();
+
+        return $this->redirectToLoginsList();
+    }
+
+    protected function redirectToLoginsList()
+    {
+        return redirect()->route('auth_tracker.list')->with([
+            'status' => [
+                'type' => 'success',
+                'message' => 'Accesses have been updated.'
+            ]
+        ]);
     }
 }

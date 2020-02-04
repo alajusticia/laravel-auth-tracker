@@ -1,9 +1,9 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Factories;
+namespace ALajusticia\AuthTracker\Factories;
 
-use AnthonyLajusticia\AuthTracker\Models\Login;
-use AnthonyLajusticia\AuthTracker\RequestContext;
+use ALajusticia\AuthTracker\Models\Login;
+use ALajusticia\AuthTracker\RequestContext;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Laravel\Passport\Events\AccessTokenCreated;
 

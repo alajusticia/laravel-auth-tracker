@@ -1,9 +1,9 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker;
+namespace ALajusticia\AuthTracker;
 
-use AnthonyLajusticia\AuthTracker\Traits\ManagesLogins;
-use AnthonyLajusticia\Expirable\ExpirableEloquentQueryBuilder;
+use ALajusticia\AuthTracker\Traits\ManagesLogins;
+use ALajusticia\Expirable\ExpirableEloquentQueryBuilder;
 
 class EloquentQueryBuilder extends ExpirableEloquentQueryBuilder
 {

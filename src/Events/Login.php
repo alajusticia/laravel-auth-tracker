@@ -1,8 +1,8 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Events;
+namespace ALajusticia\AuthTracker\Events;
 
-use AnthonyLajusticia\AuthTracker\RequestContext;
+use ALajusticia\AuthTracker\RequestContext;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Queue\SerializesModels;
 

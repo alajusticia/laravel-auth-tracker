@@ -18,18 +18,18 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th scope="col">{{ __('auth_tracker.device_type') }}</th>
-                                    <th scope="col">{{ __('auth_tracker.platform') }}</th>
-                                    <th scope="col">{{ __('auth_tracker.browser') }}</th>
-                                    <th scope="col">{{ __('auth_tracker.ip') }}</th>
+                                    <th scope="col">{{ __('Type') }}</th>
+                                    <th scope="col">{{ __('Platform') }}</th>
+                                    <th scope="col">{{ __('Browser') }}</th>
+                                    <th scope="col">{{ __('IP Address') }}</th>
                                     @ipLookup
-                                        <th scope="col">{{ __('auth_tracker.location') }}</th>
+                                        <th scope="col">{{ __('Location') }}</th>
                                     @endipLookup
-                                    <th scope="col">{{ __('auth_tracker.last_login') }}</th>
+                                    <th scope="col">{{ __('Last Login') }}</th>
                                     <th scope="col">
                                         <button type="submit" class="btn btn-outline-danger btn-sm"
                                                 data-toggle="modal" data-target="#confirmationModal">
-                                            {{ __('auth_tracker.logout_all') }}
+                                            {{ __('Logout All') }}
                                         </button>
                                     </th>
                                 </tr>
@@ -46,7 +46,7 @@
                                         @endipLookup
                                         <td>
                                             @if ($login->is_current)
-                                                <span class="badge badge-pill badge-primary">{{ __('auth_tracker.current') }}</span>
+                                                <span class="badge badge-pill badge-primary">{{ __('Current') }}</span>
                                             @elseif ($login->updated_at->diffInDays() <= 7)
                                                 {{ $login->updated_at->diffForHumans() }}
                                             @else
@@ -54,10 +54,10 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <form action="{{ route('auth_tracker.logout', ['id' => $login->id]) }}" method="post">
+                                            <form action="{{ route('logout.id', ['id' => $login->id]) }}" method="post">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-danger btn-sm">
-                                                    {{ __('auth_tracker.logout') }}
+                                                    {{ __('Logout') }}
                                                 </button>
                                             </form>
                                         </td>
@@ -84,14 +84,14 @@
                                 {{ __('You can click the "Logout others" button to logout all the devices except the current one.') }}
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('auth_tracker.cancel') }}</button>
-                                <form action="{{ route('auth_tracker.logout.others') }}" method="post">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
+                                <form action="{{ route('logout.others') }}" method="post">
                                     @csrf
-                                    <button type="submit" class="btn btn-outline-danger">{{ __('auth_tracker.logout_others') }}</button>
+                                    <button type="submit" class="btn btn-outline-danger">{{ __('Logout Others') }}</button>
                                 </form>
-                                <form action="{{ route('auth_tracker.logout.all') }}" method="post">
+                                <form action="{{ route('logout.all') }}" method="post">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger">{{ __('auth_tracker.logout_all') }}</button>
+                                    <button type="submit" class="btn btn-danger">{{ __('Logout All') }}</button>
                                 </form>
                             </div>
                         </div>

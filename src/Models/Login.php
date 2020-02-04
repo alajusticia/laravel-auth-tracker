@@ -1,10 +1,10 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Models;
+namespace ALajusticia\AuthTracker\Models;
 
-use AnthonyLajusticia\AuthTracker\EloquentQueryBuilder;
-use AnthonyLajusticia\AuthTracker\Traits\ManagesLogins;
-use AnthonyLajusticia\Expirable\Traits\Expirable;
+use ALajusticia\AuthTracker\EloquentQueryBuilder;
+use ALajusticia\AuthTracker\Traits\ManagesLogins;
+use ALajusticia\Expirable\Traits\Expirable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

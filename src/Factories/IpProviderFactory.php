@@ -1,11 +1,11 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Factories;
+namespace ALajusticia\AuthTracker\Factories;
 
-use AnthonyLajusticia\AuthTracker\Exceptions\CustomIpProviderException;
-use AnthonyLajusticia\AuthTracker\Exceptions\IpProviderException;
-use AnthonyLajusticia\AuthTracker\Interfaces\IpProvider;
-use AnthonyLajusticia\AuthTracker\IpProviders\IpApi;
+use ALajusticia\AuthTracker\Exceptions\CustomIpProviderException;
+use ALajusticia\AuthTracker\Exceptions\IpProviderException;
+use ALajusticia\AuthTracker\Interfaces\IpProvider;
+use ALajusticia\AuthTracker\IpProviders\IpApi;
 use Illuminate\Support\Facades\App;
 
 class IpProviderFactory

@@ -1,9 +1,9 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker;
+namespace ALajusticia\AuthTracker;
 
-use AnthonyLajusticia\AuthTracker\Factories\IpProviderFactory;
-use AnthonyLajusticia\AuthTracker\Macros\RouteMacros;
+use ALajusticia\AuthTracker\Factories\IpProviderFactory;
+use ALajusticia\AuthTracker\Macros\RouteMacros;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
@@ -42,28 +42,18 @@ class AuthTrackerServiceProvider extends ServiceProvider
             __DIR__.'/../config/auth_tracker.php' => config_path('auth_tracker.php'),
         ], 'config');
 
-        // Load migrations
-        $this->loadMigrationsFrom(__DIR__.'/../migrations');
-
         // Publish controllers
         $this->publishes([
-            __DIR__.'/Controllers/LoginController.php.stub' => app_path('Http/Controllers/Auth/LoginController.php'),
-            __DIR__.'/Controllers/LogoutController.php.stub' => app_path('Http/Controllers/Auth/LogoutController.php'),
-        ], 'web-controllers');
-        $this->publishes([
-            __DIR__.'/Controllers/Api/LoginController.php.stub' => app_path('Http/Controllers/Auth/Api/LoginController.php'),
-            __DIR__.'/Controllers/Api/LogoutController.php.stub' => app_path('Http/Controllers/Auth/Api/LogoutController.php'),
-        ], 'api-controllers');
+            __DIR__.'/Controllers/AuthTrackingController.stub' => app_path('Http/Controllers/Auth/AuthTrackingController.php'),
+        ], 'controllers');
 
         // Publish views
         $this->publishes([
             __DIR__.'/../resources/views/auth/list.blade.php' => base_path('resources/views/auth/list.blade.php'),
         ], 'views');
 
-        // Publish translations
-        $this->publishes([
-            __DIR__.'/../resources/lang/en/auth_tracker.php' => base_path('resources/lang/en/auth_tracker.php'),
-        ], 'translations');
+        // Load migrations
+        $this->loadMigrationsFrom(__DIR__.'/../migrations');
 
         // Register extended Eloquent user provider
         Auth::provider('eloquent-extended', function ($app, array $config) {
@@ -71,8 +61,8 @@ class AuthTrackerServiceProvider extends ServiceProvider
         });
 
         // Register event subscribers
-        Event::subscribe('AnthonyLajusticia\AuthTracker\Listeners\AuthEventSubscriber');
-        Event::subscribe('AnthonyLajusticia\AuthTracker\Listeners\ApiAuthEventSubscriber');
+        Event::subscribe('ALajusticia\AuthTracker\Listeners\AuthEventSubscriber');
+        Event::subscribe('ALajusticia\AuthTracker\Listeners\ApiAuthEventSubscriber');
 
         // Register route macros
         Route::mixin(new RouteMacros);

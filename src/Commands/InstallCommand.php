@@ -1,6 +1,6 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Commands;
+namespace ALajusticia\AuthTracker\Commands;
 
 use Illuminate\Console\Command;
 
@@ -18,7 +18,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Install the Auth Tracker scaffolding';
+    protected $description = 'Auth Tracker scaffolding';
 
     /**
      * Execute the console command.
@@ -27,31 +27,26 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $type = $this->choice('For which authentication guard driver do you want to install the scaffolding?',
-            ['Session', 'Passport', 'Session & Passport']);
+        $this->comment('Publishing configuration...');
 
-        $this->comment('Publishing Auth Tracker Configuration...');
+        $this->call('vendor:publish', ['--tag' => 'config']);
 
-        $this->callSilent('vendor:publish', ['--tag' => 'config']);
+        $this->comment('Publishing controllers...');
 
-        $this->comment('Publishing Auth Tracker Assets...');
+        $this->call('vendor:publish', ['--tag' => 'controllers']);
 
-        switch ($type) {
-            case 'Session':
-                $this->callSilent('vendor:publish', ['--tag' => 'web-controllers']);
-                $this->callSilent('vendor:publish', ['--tag' => 'views']);
-                break;
-            case 'Passport':
-                $this->callSilent('vendor:publish', ['--tag' => 'api-controllers']);
-                break;
-            default:
-                $this->callSilent('vendor:publish', ['--tag' => 'web-controllers']);
-                $this->callSilent('vendor:publish', ['--tag' => 'views']);
-                $this->callSilent('vendor:publish', ['--tag' => 'api-controllers']);
-        }
+        $this->comment('Publishing views...');
 
-        $this->callSilent('vendor:publish', ['--tag' => 'translations']);
+        $this->call('vendor:publish', ['--tag' => 'views']);
 
-        $this->comment('Auth Tracker scaffolding installed successfully.');
+        $this->comment('Adding routes in web.php...');
+
+        file_put_contents(
+            base_path('routes/web.php'),
+            file_get_contents(__DIR__.'/../routes.stub'),
+            FILE_APPEND
+        );
+
+        $this->info('Auth Tracker installed!');
     }
 }

@@ -1,10 +1,9 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Listeners;
+namespace ALajusticia\AuthTracker\Listeners;
 
-use AnthonyLajusticia\AuthTracker\Factories\LoginFactory;
-use AnthonyLajusticia\AuthTracker\RequestContext;
-use App\Notifications\LoggedIn;
+use ALajusticia\AuthTracker\Factories\LoginFactory;
+use ALajusticia\AuthTracker\RequestContext;
 use Laravel\Passport\Events\AccessTokenCreated;
 use Laravel\Passport\Token;
 
@@ -36,7 +35,7 @@ class ApiAuthEventSubscriber
 
             if (request()->input('grant_type') !== 'refresh_token') {
 
-                event(new \AnthonyLajusticia\AuthTracker\Events\Login($user, $context));
+                event(new \ALajusticia\AuthTracker\Events\Login($user, $context));
             }
         }
     }
@@ -49,7 +48,7 @@ class ApiAuthEventSubscriber
      */
     protected function tracked($user)
     {
-        return in_array('AnthonyLajusticia\AuthTracker\Traits\AuthTracking', class_uses($user));
+        return in_array('ALajusticia\AuthTracker\Traits\AuthTracking', class_uses($user));
     }
 
     /**
@@ -61,7 +60,7 @@ class ApiAuthEventSubscriber
     {
         $events->listen(
             'Laravel\Passport\Events\AccessTokenCreated',
-            'AnthonyLajusticia\AuthTracker\Listeners\ApiAuthEventSubscriber@handleAccessTokenCreation'
+            'ALajusticia\AuthTracker\Listeners\ApiAuthEventSubscriber@handleAccessTokenCreation'
         );
     }
 }

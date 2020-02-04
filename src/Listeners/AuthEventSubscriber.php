@@ -1,11 +1,10 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Listeners;
+namespace ALajusticia\AuthTracker\Listeners;
 
-use AnthonyLajusticia\AuthTracker\Factories\LoginFactory;
-use AnthonyLajusticia\AuthTracker\Models\Login;
-use AnthonyLajusticia\AuthTracker\RequestContext;
-use App\Notifications\LoggedIn;
+use ALajusticia\AuthTracker\Factories\LoginFactory;
+use ALajusticia\AuthTracker\Models\Login;
+use ALajusticia\AuthTracker\RequestContext;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Recaller;
@@ -57,7 +56,7 @@ class AuthEventSubscriber
                 // Update the remember token
                 $this->updateRememberToken($event->user, Str::random(60));
 
-                event(new \AnthonyLajusticia\AuthTracker\Events\Login($event->user, $context));
+                event(new \ALajusticia\AuthTracker\Events\Login($event->user, $context));
             }
         }
     }
@@ -112,7 +111,7 @@ class AuthEventSubscriber
      */
     protected function tracked($user)
     {
-        return in_array('AnthonyLajusticia\AuthTracker\Traits\AuthTracking', class_uses($user));
+        return in_array('ALajusticia\AuthTracker\Traits\AuthTracking', class_uses($user));
     }
 
     /**
@@ -124,12 +123,12 @@ class AuthEventSubscriber
     {
         $events->listen(
             'Illuminate\Auth\Events\Login',
-            'AnthonyLajusticia\AuthTracker\Listeners\AuthEventSubscriber@handleSuccessfulLogin'
+            'ALajusticia\AuthTracker\Listeners\AuthEventSubscriber@handleSuccessfulLogin'
         );
 
         $events->listen(
             'Illuminate\Auth\Events\Logout',
-            'AnthonyLajusticia\AuthTracker\Listeners\AuthEventSubscriber@handleSuccessfulLogout'
+            'ALajusticia\AuthTracker\Listeners\AuthEventSubscriber@handleSuccessfulLogout'
         );
     }
 }

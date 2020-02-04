@@ -1,11 +1,11 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker;
+namespace ALajusticia\AuthTracker;
 
-use AnthonyLajusticia\AuthTracker\Factories\IpProviderFactory;
-use AnthonyLajusticia\AuthTracker\Factories\ParserFactory;
-use AnthonyLajusticia\AuthTracker\Interfaces\IpProvider;
-use AnthonyLajusticia\AuthTracker\Interfaces\UserAgentParser;
+use ALajusticia\AuthTracker\Factories\IpProviderFactory;
+use ALajusticia\AuthTracker\Factories\ParserFactory;
+use ALajusticia\AuthTracker\Interfaces\IpProvider;
+use ALajusticia\AuthTracker\Interfaces\UserAgentParser;
 
 class RequestContext
 {

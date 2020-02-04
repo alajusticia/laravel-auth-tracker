@@ -1,8 +1,8 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Traits;
+namespace ALajusticia\AuthTracker\Traits;
 
-use AnthonyLajusticia\AuthTracker\Models\Login;
+use ALajusticia\AuthTracker\Models\Login;
 
 trait AuthTracking
 {
@@ -11,7 +11,7 @@ trait AuthTracking
      */
     public function logins()
     {
-        return $this->morphMany('AnthonyLajusticia\AuthTracker\Models\Login', 'authenticatable');
+        return $this->morphMany('ALajusticia\AuthTracker\Models\Login', 'authenticatable');
     }
 
     /**

@@ -1,5 +1,5 @@
 {
-    "name": "anthonylajusticia/laravel-auth-tracker",
+    "name": "alajusticia/laravel-auth-tracker",
     "description": "Track and manage the sessions and Passport tokens in Laravel.",
     "license": "MIT",
     "authors": [
@@ -16,13 +16,13 @@
     },
     "autoload": {
         "psr-4": {
-            "AnthonyLajusticia\\AuthTracker\\": "src"
+            "ALajusticia\\AuthTracker\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "AnthonyLajusticia\\AuthTracker\\AuthTrackerServiceProvider"
+                "ALajusticia\\AuthTracker\\AuthTrackerServiceProvider"
             ]
         }
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\IpProviders;
+namespace ALajusticia\AuthTracker\IpProviders;
 
-use AnthonyLajusticia\AuthTracker\Interfaces\IpProvider;
-use AnthonyLajusticia\AuthTracker\Traits\MakesApiCalls;
+use ALajusticia\AuthTracker\Interfaces\IpProvider;
+use ALajusticia\AuthTracker\Traits\MakesApiCalls;
 use GuzzleHttp\Psr7\Request;
 
 class IpApi implements IpProvider

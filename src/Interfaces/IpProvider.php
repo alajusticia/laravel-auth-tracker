@@ -1,6 +1,6 @@
 <?php
 
-namespace AnthonyLajusticia\AuthTracker\Interfaces;
+namespace ALajusticia\AuthTracker\Interfaces;
 
 use GuzzleHttp\Psr7\Request;
 

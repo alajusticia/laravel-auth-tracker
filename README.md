@@ -58,22 +58,13 @@ the sessions only in the client browser and the array driver.
 Install the package with composer:
 
 ```bash
-composer require anthonylajusticia/laravel-auth-tracker
-```
-
-The service provider will automatically get registered. Or you may manually add it in your `config/app.php` file:
-
-```php
-'providers' => [
-    // ...
-    AnthonyLajusticia\AuthTracker\AuthTrackerServiceProvider::class,
-];
+composer require alajusticia/laravel-auth-tracker
 ```
 
 You can publish the configuration file with:
 
 ```bash
-php artisan vendor:publish --provider="AnthonyLajusticia\AuthTracker\AuthTrackerServiceProvider" --tag="config"
+php artisan vendor:publish --provider="ALajusticia\AuthTracker\AuthTrackerServiceProvider" --tag="config"
 ```
 
 ### Create the logins table
@@ -102,11 +93,11 @@ php artisan auth-tracker:install
 
 ### Prepare your authenticatable models
 
-In order to track the logins of your app's users, add the `AnthonyLajusticia\AuthTracker\Traits\AuthTracking` trait
+In order to track the logins of your app's users, add the `ALajusticia\AuthTracker\Traits\AuthTracking` trait
 on each of your authenticatable models that you want to track:
 
 ```php
-use AnthonyLajusticia\AuthTracker\Traits\AuthTracking;
+use ALajusticia\AuthTracker\Traits\AuthTracking;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 // ...
 
@@ -121,7 +112,7 @@ class User extends Authenticatable
 ### Prepare your LoginController
 
 Replace the `Illuminate\Foundation\Auth\AuthenticatesUsers` trait of your `App\Http\Controllers\Auth\LoginController`
-by the `AnthonyLajusticia\AuthTracker\Traits\AuthenticatesWithTracking` trait provided by this package.
+by the `ALajusticia\AuthTracker\Traits\AuthenticatesWithTracking` trait provided by this package.
 
 This trait adds a `listLogins` method that you can override to suit your needs.
 
@@ -287,7 +278,7 @@ return [
         | to the provider's API.
         |
         | If the request takes more time, the IP address lookup will be ignored
-        | and the AnthonyLajusticia\AuthTracker\Events\FailedApiCall will be
+        | and the ALajusticia\AuthTracker\Events\FailedApiCall will be
         | dispatched, receiving the attribute $exception containing the
         | GuzzleHttp\Exception\TransferException.
         |
@@ -426,7 +417,7 @@ Route::namespace('Auth\Api')->prefix($prefix)->group(function () {
 
 ### Login
 
-On a new login, you can listen to the event `AnthonyLajusticia\AuthTracker\Events\Login`.
+On a new login, you can listen to the event `ALajusticia\AuthTracker\Events\Login`.
 It receives a `RequestContext` object containing all the informations collected on the request, accessible on the event
 with the `context` property.
 
@@ -473,16 +464,16 @@ For now, this package comes with one officially supported provider for IP addres
 ### Custom provider
 
 You can add your own providers by creating a class that implements the
-`AnthonyLajusticia\AuthTracker\Interfaces\IpProvider` interface and use the
-`AnthonyLajusticia\AuthTracker\Traits\MakesApiCalls` trait.
+`ALajusticia\AuthTracker\Interfaces\IpProvider` interface and use the
+`ALajusticia\AuthTracker\Traits\MakesApiCalls` trait.
 
 Your custom class have to be registered in the `custom_providers` array of the configuration file.
 
 Let's see an example of an IP lookup provider with the built-in `IpApi` provider:
 
 ```php
-use AnthonyLajusticia\AuthTracker\Interfaces\IpProvider;
-use AnthonyLajusticia\AuthTracker\Traits\MakesApiCalls;
+use ALajusticia\AuthTracker\Interfaces\IpProvider;
+use ALajusticia\AuthTracker\Traits\MakesApiCalls;
 use GuzzleHttp\Psr7\Request;
 
 class IpApi implements IpProvider
