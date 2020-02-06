@@ -68,6 +68,9 @@ class AuthTrackerServiceProvider extends ServiceProvider
         Route::mixin(new RouteMacros);
 
         // Register Blade directives
+        Blade::if('tracked', function () {
+            return method_exists(request()->user(), 'logins');
+        });
         Blade::if('ipLookup', function () {
             return IpProviderFactory::ipLookupEnabled();
         });

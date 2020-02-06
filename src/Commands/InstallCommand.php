@@ -11,7 +11,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'auth-tracker:install';
+    protected $signature = 'tracker:install';
 
     /**
      * The console command description.
@@ -31,14 +31,17 @@ class InstallCommand extends Command
 
         $this->call('vendor:publish', ['--tag' => 'config']);
 
+        $this->line('');
         $this->comment('Publishing controllers...');
 
         $this->call('vendor:publish', ['--tag' => 'controllers']);
 
+        $this->line('');
         $this->comment('Publishing views...');
 
         $this->call('vendor:publish', ['--tag' => 'views']);
 
+        $this->line('');
         $this->comment('Adding routes in web.php...');
 
         file_put_contents(
@@ -47,6 +50,7 @@ class InstallCommand extends Command
             FILE_APPEND
         );
 
+        $this->line('');
         $this->info('Auth Tracker installed!');
     }
 }

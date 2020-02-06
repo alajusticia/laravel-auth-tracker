@@ -26,7 +26,7 @@
                                         <th scope="col">{{ __('Location') }}</th>
                                     @endipLookup
                                     <th scope="col">{{ __('Last Login') }}</th>
-                                    <th scope="col">
+                                    <th scope="col" class="text-right">
                                         <button type="submit" class="btn btn-outline-danger btn-sm"
                                                 data-toggle="modal" data-target="#confirmationModal">
                                             {{ __('Logout All') }}
@@ -53,7 +53,7 @@
                                                 {{ $login->updated_at }}
                                             @endif
                                         </td>
-                                        <td>
+                                        <td class="text-right">
                                             <form action="{{ route('logout.id', ['id' => $login->id]) }}" method="post">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-danger btn-sm">

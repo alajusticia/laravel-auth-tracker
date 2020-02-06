@@ -35,7 +35,7 @@ trait AuthTracking
     }
 
     /**
-     * Destroy a session / Revoke an access token.
+     * Destroy a session / Revoke an access token by its ID.
      *
      * @param int|null $loginId
      * @return bool
@@ -104,5 +104,10 @@ trait AuthTracking
         return file_exists(base_path('vendor/laravel/passport'))
             && in_array('Laravel\Passport\HasApiTokens', class_uses($this))
             && ! is_null($this->token());
+    }
+
+    public function isTracked()
+    {
+        return in_array('ALajusticia\AuthTracker\Traits\AuthTracking', class_uses($this));
     }
 }

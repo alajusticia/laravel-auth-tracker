@@ -13,16 +13,19 @@ class RouteMacros
      */
     public function authTracker()
     {
-        return function ($path) {
+        return function ($prefix) {
 
-            // Route to manage logins
-            Route::get($path, 'Auth\AuthTrackingController@listLogins')->name('login.list');
+            Route::prefix($prefix)->group(function () {
 
-            // Logout routes
-            Route::middleware('auth')->group(function () {
-                Route::post('logout/all', 'Auth\LoginController@logoutAll')->name('logout.all');
-                Route::post('logout/others', 'Auth\LoginController@logoutOthers')->name('logout.others');
-                Route::post('logout/{id}', 'Auth\LoginController@logoutById')->where('id', '[0-9]+')->name('logout.id');
+                // Route to manage logins
+                Route::get('/', 'Auth\AuthTrackingController@listLogins')->name('login.list');
+
+                // Logout routes
+                Route::middleware('auth')->group(function () {
+                    Route::post('logout/all', 'Auth\AuthTrackingController@logoutAll')->name('logout.all');
+                    Route::post('logout/others', 'Auth\AuthTrackingController@logoutOthers')->name('logout.others');
+                    Route::post('logout/{id}', 'Auth\AuthTrackingController@logoutById')->where('id', '[0-9]+')->name('logout.id');
+                });
             });
         };
     }

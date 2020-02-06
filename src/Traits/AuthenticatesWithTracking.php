@@ -22,35 +22,4 @@ trait AuthenticatesWithTracking
         return $this->authenticated($request, $this->guard()->user())
             ?: redirect()->intended($this->redirectPath());
     }
-
-    public function logoutById(Request $request, $id)
-    {
-        $request->user()->logout($id);
-
-        return $this->redirectToLoginsList();
-    }
-
-    public function logoutAll(Request $request)
-    {
-        $request->user()->logoutAll();
-
-        return $this->loggedOut($request) ?: redirect('/');
-    }
-
-    public function logoutOthers(Request $request)
-    {
-        $request->user()->logoutOthers();
-
-        return $this->redirectToLoginsList();
-    }
-
-    protected function redirectToLoginsList()
-    {
-        return redirect()->route('auth_tracker.list')->with([
-            'status' => [
-                'type' => 'success',
-                'message' => 'Accesses have been updated.'
-            ]
-        ]);
-    }
 }
