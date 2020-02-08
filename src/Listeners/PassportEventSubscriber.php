@@ -7,7 +7,7 @@ use ALajusticia\AuthTracker\RequestContext;
 use Laravel\Passport\Events\AccessTokenCreated;
 use Laravel\Passport\Token;
 
-class ApiAuthEventSubscriber
+class PassportEventSubscriber
 {
     public function handleAccessTokenCreation(AccessTokenCreated $event)
     {
@@ -60,7 +60,7 @@ class ApiAuthEventSubscriber
     {
         $events->listen(
             'Laravel\Passport\Events\AccessTokenCreated',
-            'ALajusticia\AuthTracker\Listeners\ApiAuthEventSubscriber@handleAccessTokenCreation'
+            'ALajusticia\AuthTracker\Listeners\PassportEventSubscriber@handleAccessTokenCreation'
         );
     }
 }

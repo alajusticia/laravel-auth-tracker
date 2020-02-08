@@ -41,6 +41,7 @@ class Login extends Model
         'session_id',
         'remember_token',
         'oauth_access_token_id',
+        'personal_access_token_id',
         'expires_at',
         'deleted_at',
     ];
@@ -98,10 +99,23 @@ class Login extends Model
      */
     public function getIsCurrentAttribute()
     {
-        if (request()->hasSession()) {
+        if ($this->session_id && request()->hasSession()) {
+
+            // Session
+
             return $this->session_id === request()->session()->getId();
-        } elseif (method_exists(request()->user(), 'token')) {
+
+        } elseif ($this->oauth_access_token_id && request()->user()->isAuthenticatedByPassport()) {
+
+            // Passport
+
             return $this->oauth_access_token_id === request()->user()->token()->id;
+
+        } elseif ($this->personal_access_token_id && request()->user()->isAuthenticatedByAirlock()) {
+
+            // Airlock
+
+            return $this->personal_access_token_id === request()->user()->currentAccessToken()->id;
         }
 
         return false;
@@ -116,11 +130,20 @@ class Login extends Model
     public function revoke()
     {
         if ($this->session_id) {
+
             // Destroy session
             $this->destroySession($this->session_id);
+
         } elseif ($this->oauth_access_token_id) {
-            // Revoke token
-            $this->revokeTokens($this->oauth_access_token_id);
+
+            // Revoke Passport token
+            $this->revokePassportTokens($this->oauth_access_token_id);
+
+        } elseif ($this->personal_access_token_id) {
+
+            // Revoke Airlock token
+            $this->revokeAirlockTokens($this->personal_access_token_id);
+
         }
 
         // Delete login

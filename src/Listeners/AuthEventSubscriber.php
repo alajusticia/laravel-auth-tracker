@@ -31,9 +31,6 @@ class AuthEventSubscriber
             } else {
                 // Initial login
 
-                // Notification enabled?
-                $notify = session('auth_tracker_notify', config('auth_tracker.notify'));
-
                 // Regenerate the session ID to avoid session fixation attacks
                 session()->regenerate();
 

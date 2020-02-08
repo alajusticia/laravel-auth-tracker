@@ -5,6 +5,7 @@ namespace ALajusticia\AuthTracker\Traits;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Laravel\Airlock\PersonalAccessToken;
 
 trait ManagesLogins
 {
@@ -25,12 +26,12 @@ trait ManagesLogins
     }
 
     /**
-     * Revoke the given access token ids.
+     * Revoke the given Passport access token ids.
      *
      * @param Collection|array|int $accessTokenIds
      * @return void
      */
-    protected function revokeTokens($accessTokenIds)
+    protected function revokePassportTokens($accessTokenIds)
     {
         // Support for collections
         if ($accessTokenIds instanceof Collection) {
@@ -50,6 +51,28 @@ trait ManagesLogins
             DB::table('oauth_access_tokens')
                 ->whereIn('id', $accessTokenIds)
                 ->update(['revoked' => true]);
+        }
+    }
+
+    /**
+     * Revoke the given Airlock personal access token ids.
+     *
+     * @param Collection|array|int $personalAccessTokenIds
+     * @return void
+     */
+    protected function revokeAirlockTokens($personalAccessTokenIds)
+    {
+        // Support for collections
+        if ($personalAccessTokenIds instanceof Collection) {
+            $personalAccessTokenIds = $personalAccessTokenIds->all();
+        }
+
+        // Convert parameters into an array if needed
+        $personalAccessTokenIds = is_array($personalAccessTokenIds) ? $personalAccessTokenIds : func_get_args();
+
+        if (! empty($personalAccessTokenIds)) {
+            PersonalAccessToken::whereIn('id', $personalAccessTokenIds)
+                ->delete();
         }
     }
 }

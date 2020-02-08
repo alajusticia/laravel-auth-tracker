@@ -23,11 +23,21 @@ trait AuthTracking
     {
         if ($this->isAuthenticatedBySession()) {
 
-            return $this->logins()->where('session_id', session()->getId())->first();
+            return $this->logins()
+                        ->where('session_id', session()->getId())
+                        ->first();
 
-        } elseif ($this->isAuthenticatedByToken()) {
+        } elseif ($this->isAuthenticatedByPassport()) {
 
-            return $this->logins()->where('oauth_access_token_id', $this->token()->id)->first();
+            return $this->logins()
+                        ->where('oauth_access_token_id', $this->token()->id)
+                        ->first();
+
+        } elseif ($this->isAuthenticatedByAirlock()) {
+
+            return $this->logins()
+                        ->where('personal_access_token_id', $this->currentAccessToken()->id)
+                        ->first();
 
         }
 
@@ -62,11 +72,18 @@ trait AuthTracking
                         ->orWhereNull('session_id')
                         ->revoke();
 
-        } elseif ($this->isAuthenticatedByToken()) {
+        } elseif ($this->isAuthenticatedByPassport()) {
 
             return $this->logins()
                         ->where('oauth_access_token_id', '!=', $this->token()->id)
                         ->orWhereNull('oauth_access_token_id')
+                        ->revoke();
+
+        } elseif ($this->isAuthenticatedByAirlock()) {
+
+            return $this->logins()
+                        ->where('personal_access_token_id', '!=', $this->currentAccessToken()->id)
+                        ->orWhereNull('personal_access_token_id')
                         ->revoke();
 
         }
@@ -95,15 +112,25 @@ trait AuthTracking
     }
 
     /**
-     * Check for stateless authentication.
+     * Check for authentication via Passport.
      *
      * @return bool
      */
-    public function isAuthenticatedByToken()
+    public function isAuthenticatedByPassport()
     {
-        return file_exists(base_path('vendor/laravel/passport'))
-            && in_array('Laravel\Passport\HasApiTokens', class_uses($this))
+        return in_array('Laravel\Passport\HasApiTokens', class_uses($this))
             && ! is_null($this->token());
+    }
+
+    /**
+     * Check for authentication via Airlock.
+     *
+     * @return bool
+     */
+    public function isAuthenticatedByAirlock()
+    {
+        return in_array('Laravel\Airlock\HasApiTokens', class_uses($this))
+            && ! is_null($this->currentAccessToken());
     }
 
     public function isTracked()

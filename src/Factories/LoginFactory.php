@@ -2,6 +2,7 @@
 
 namespace ALajusticia\AuthTracker\Factories;
 
+use ALajusticia\AuthTracker\Events\PersonalAccessTokenCreated;
 use ALajusticia\AuthTracker\Models\Login;
 use ALajusticia\AuthTracker\RequestContext;
 use Illuminate\Auth\Events\Login as LoginEvent;
@@ -52,6 +53,10 @@ class LoginFactory
         if ($event instanceof AccessTokenCreated) {
 
             $login->oauth_access_token_id = $event->tokenId;
+
+        } elseif ($event instanceof PersonalAccessTokenCreated) {
+
+            $login->personal_access_token_id = $event->personalAccessToken->id;
 
         } else {
 
