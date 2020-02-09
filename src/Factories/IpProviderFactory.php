@@ -5,6 +5,7 @@ namespace ALajusticia\AuthTracker\Factories;
 use ALajusticia\AuthTracker\Exceptions\CustomIpProviderException;
 use ALajusticia\AuthTracker\Exceptions\IpProviderException;
 use ALajusticia\AuthTracker\Interfaces\IpProvider;
+use ALajusticia\AuthTracker\IpProviders\Ip2LocationLite;
 use ALajusticia\AuthTracker\IpProviders\IpApi;
 use Illuminate\Support\Facades\App;
 
@@ -41,6 +42,8 @@ class IpProviderFactory
                 // Use of an officially supported IP address lookup provider
 
                 switch ($name) {
+                    case 'ip2location-lite':
+                        return new Ip2LocationLite;
                     case 'ip-api':
                         return new IpApi;
                     default:

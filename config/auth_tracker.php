@@ -69,7 +69,8 @@ return [
         | IP address lookup provider.
         |
         | Supported values:
-        | - 'ip-api' (see https://members.ip-api.com/)
+        | - 'ip2location-lite' (see https://lite.ip2location.com/database/ip-country-region-city)
+        | - 'ip-api' (see https://members.ip-api.com)
         | - false (to disable the IP address lookup feature)
         | - any other custom name declared as a key of the custom_providers array
         |

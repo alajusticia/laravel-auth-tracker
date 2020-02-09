@@ -1,6 +1,6 @@
 {
     "name": "alajusticia/laravel-auth-tracker",
-    "description": "Track and manage the sessions and Passport tokens in Laravel.",
+    "description": "Track and manage sessions, Passport tokens and Airlock tokens in Laravel.",
     "license": "MIT",
     "authors": [
         {

@@ -1,6 +1,6 @@
 # Laravel Auth Tracker
 
-Track and manage the sessions and Passport tokens in Laravel.
+#### Track and manage sessions, Passport tokens and Airlock tokens in Laravel.
 
 This package allows you to track separately each login (session or token), attaching informations by parsing the
 User-Agent and saving the IP address.
@@ -9,7 +9,7 @@ Using a supported provider or creating your own custom providers, you can collec
 an IP address lookup to get, for example, the geolocation.
 
 You can revoke every single login or all at once. In case of sessions with remember tokens, every session has its
-own remember token. This way, you can logout a session without affecting the others. It solves this
+own remember token. This way, you can revoke a session without affecting the others. It solves this
 [issue](https://github.com/laravel/ideas/issues/971).
 
 * [Compatibility](#compatibility)
@@ -45,7 +45,7 @@ own remember token. This way, you can logout a session without affecting the oth
 - It works with all the session drivers supported by Laravel, except of course the cookie driver which saves
 the sessions only in the client browser and the array driver.
 
-- To track API tokens, it supports the official **Laravel Passport >= 7.5** package.
+- To track API tokens, it supports the official **Laravel Passport (>= 7.5)** and **Laravel Airlock (v0.2.0)** packages.
 
 - In case you want to use Passport with multiple user providers, this package works with the
 `sfelix-martins/passport-multiauth` package (see [here](https://github.com/sfelix-martins/passport-multiauth)).
