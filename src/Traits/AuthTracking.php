@@ -3,6 +3,7 @@
 namespace ALajusticia\AuthTracker\Traits;
 
 use ALajusticia\AuthTracker\Models\Login;
+use Illuminate\Database\Eloquent\Builder;
 
 trait AuthTracking
 {
@@ -68,24 +69,32 @@ trait AuthTracking
         if ($this->isAuthenticatedBySession()) {
 
             return $this->logins()
-                        ->where('session_id', '!=', session()->getId())
-                        ->orWhereNull('session_id')
+                        ->where(function (Builder $query) {
+                            return $query
+                                ->where('session_id', '!=', session()->getId())
+                                ->orWhereNull('session_id');
+                        })
                         ->revoke();
 
         } elseif ($this->isAuthenticatedByPassport()) {
 
             return $this->logins()
-                        ->where('oauth_access_token_id', '!=', $this->token()->id)
-                        ->orWhereNull('oauth_access_token_id')
+                        ->where(function (Builder $query) {
+                            return $query
+                                ->where('oauth_access_token_id', '!=', $this->token()->id)
+                                ->orWhereNull('oauth_access_token_id');
+                        })
                         ->revoke();
 
         } elseif ($this->isAuthenticatedByAirlock()) {
 
             return $this->logins()
-                        ->where('personal_access_token_id', '!=', $this->currentAccessToken()->id)
-                        ->orWhereNull('personal_access_token_id')
+                        ->where(function (Builder $query) {
+                            return $query
+                                ->where('personal_access_token_id', '!=', $this->currentAccessToken()->id)
+                                ->orWhereNull('personal_access_token_id');
+                        })
                         ->revoke();
-
         }
 
         return false;
@@ -131,10 +140,5 @@ trait AuthTracking
     {
         return in_array('Laravel\Airlock\HasApiTokens', class_uses($this))
             && ! is_null($this->currentAccessToken());
-    }
-
-    public function isTracked()
-    {
-        return in_array('ALajusticia\AuthTracker\Traits\AuthTracking', class_uses($this));
     }
 }
