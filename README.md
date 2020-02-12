@@ -212,7 +212,7 @@ $logins = request()->user()->logins;
 #### Get the current login
 
 ```php
-$login = request()->user()->currentLogin;
+$login = request()->user()->current_login;
 ```
 
 ### Check for the current login
