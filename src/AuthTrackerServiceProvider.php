@@ -56,7 +56,7 @@ class AuthTrackerServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         // Register extended Eloquent user provider
-        Auth::provider('eloquent-extended', function ($app, array $config) {
+        Auth::provider('eloquent-tracked', function ($app, array $config) {
             return new EloquentUserProviderExtended($app['hash'], $config['model']);
         });
 

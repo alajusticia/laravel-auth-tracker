@@ -125,5 +125,20 @@ return [
         */
 
         'custom_providers' => [],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Ip2Location
+        |--------------------------------------------------------------------------
+        |
+        | If you are using 'ip2location-lite' provider, here you may change the
+        | name of the tables for IPv4 and IPv6.
+        |
+        */
+
+        'ip2location' => [
+            'ipv4_table' => 'ip2location_db3',
+            'ipv6_table' => 'ip2location_db3_ipv6',
+        ],
     ],
 ];

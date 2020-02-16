@@ -18,8 +18,8 @@ class Ip2LocationLite implements IpProvider
     public function __construct()
     {
         $table = filter_var(request()->ip(), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)
-                 ? 'ip2location_db3_ipv6'
-                 : 'ip2location_db3';
+                 ? config('auth_tracker.ip_lookup.ip2location.ipv6_table')
+                 : config('auth_tracker.ip_lookup.ip2location.ipv4_table');
 
         $this->result = DB::table($table)
                           ->whereRaw('INET_ATON(?) <= ip_to', [request()->ip()])

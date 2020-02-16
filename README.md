@@ -121,12 +121,12 @@ to use.
 
 This package comes with a modified Eloquent user provider that retrieve remembered users from the logins table instead of the users table.
 
-In your `config/auth.php` configuration file, use the `eloquent-extended` driver in the user providers list for the users you want to track:
+In your `config/auth.php` configuration file, use the `eloquent-tracked` driver in the user providers list for the users you want to track:
 
 ```php
 'providers' => [
     'users' => [
-        'driver' => 'eloquent-extended',
+        'driver' => 'eloquent-tracked',
         'model' => App\User::class,
     ],
     
@@ -212,7 +212,7 @@ $logins = request()->user()->logins;
 #### Get the current login
 
 ```php
-$login = request()->user()->current_login;
+$login = request()->user()->currentLogin();
 ```
 
 ### Check for the current login
@@ -320,7 +320,22 @@ But you can go even further and collect other informations about the IP address,
 
 To do so, you first have to enable the IP lookup feature in the configuration file.
 
-For now, this package comes with one officially supported provider for IP address lookup.
+This package comes with two officially supported providers for IP address lookup
+(see the IP Address Lookup section in the `config/auth_tracker.php` configuration file).
+
+### Ip2Location Lite DB3
+
+This package officially support the IP address geolocation with the Ip2Location Lite DB3.
+
+Here are the steps to enable and use it:
+
+- Download the current version of the database and import it in your database as explained in the documentation:
+[https://lite.ip2location.com/database/ip-country-region-city](https://lite.ip2location.com/database/ip-country-region-city)
+
+- Set the name of the `ip_lookup.provider` option to `ip2location-lite` in the `config/auth_tracker.php` configuration file
+
+- Indicate the name of the tables used in your database for IPv4 and IPv6 in the `config/auth_tracker.php` configuration file
+(by default it uses the same names as the documentation: `ip2location_db3` and `ip2location_db3_ipv6`)
 
 ### Custom provider
 

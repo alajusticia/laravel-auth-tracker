@@ -20,7 +20,7 @@ trait AuthTracking
      *
      * @return Login|null
      */
-    public function getCurrentLoginAttribute()
+    public function currentLogin()
     {
         if ($this->isAuthenticatedBySession()) {
 
@@ -54,7 +54,7 @@ trait AuthTracking
      */
     public function logout($loginId = null)
     {
-        $login = $loginId ? $this->logins()->find($loginId) : $this->getCurrentLoginAttribute();
+        $login = $loginId ? $this->logins()->find($loginId) : $this->currentLogin();
 
         return $login ? (! empty($login->revoke())) : false;
     }
