@@ -160,8 +160,8 @@ an API token is created.
 If you are issuing API tokens with Laravel Airlock and want to enable auth tracking,
 you will have to dispatch an event provided by the Auth Tracker.
 
-Dispatch the `PersonalAccessTokenCreated` event when you create an access token with Laravel Airlock, passing
-the access token newly created via the `createToken` method of the `Laravel\Airlock\HasApiTokens` trait.
+Dispatch the `ALajusticia\AuthTracker\Events\PersonalAccessTokenCreated` event passing the personal access token
+newly created by the `createToken` method of the Laravel Airlock trait.
 
 Based on the [example](https://github.com/laravel/airlock#authenticating-mobile-applications) provided by
 the Laravel Airlock documentation, it might look like this:
@@ -190,7 +190,7 @@ Route::post('/airlock/token', function (Request $request) {
 
     $newAccessToken = $user->createToken($request->device_name);
     
-    event(new PersonalAccessTokenCreated($newAccessToken));
+    event(new PersonalAccessTokenCreated($newAccessToken)); // Dispatch here the event
 
     return $newAccessToken->plainTextToken;
 });
