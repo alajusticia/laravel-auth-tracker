@@ -23,7 +23,9 @@ class AirlockEventSubscriber
             $login = LoginFactory::build($event, $context);
 
             // Set the expiration date
-            $login->expiresAt(Carbon::now()->addMinutes(config('airlock.expiration')));
+            if ($minutes = config('airlock.expiration')) {
+                $login->expiresAt(Carbon::now()->addMinutes($minutes));
+            }
 
             // Attach the login to the user and save it
             $user->logins()->save($login);
