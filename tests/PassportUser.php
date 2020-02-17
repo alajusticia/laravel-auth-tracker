@@ -10,8 +10,6 @@ class PassportUser extends Authenticatable
 {
     use AuthTracking, HasApiTokens;
 
-    protected $table = 'users';
-
     protected $fillable = [
         'id', 'name', 'email', 'password',
     ];

@@ -4,10 +4,11 @@ namespace ALajusticia\AuthTracker\Tests;
 
 use ALajusticia\AuthTracker\Traits\AuthTracking;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Airlock\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use AuthTracking;
+    use AuthTracking, HasApiTokens;
 
     protected $fillable = [
         'id', 'name', 'email', 'password',

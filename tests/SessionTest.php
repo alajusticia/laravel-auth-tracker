@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SessionTest extends TestCase
 {
-    public function test_login_is_tracked()
+    public function test_auth_with_session()
     {
         // Create user
         $user = factory(User::class)->create();
