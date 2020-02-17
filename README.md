@@ -34,6 +34,7 @@ own remember token. This way, you can revoke a session without affecting the oth
 * [Events](#events)
   * [Login](#login)
 * [IP address lookup](#ip-address-lookup)
+  * [Ip2Location Lite DB3](#ip2location-lite-db3)
   * [Custom provider](#custom-provider)
   * [Handle API errors](#handle-api-errors)
 * [Blade directives](#blade-directives)
