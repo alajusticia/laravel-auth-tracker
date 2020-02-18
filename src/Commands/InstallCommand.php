@@ -27,11 +27,6 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->comment('Publishing configuration...');
-
-        $this->call('vendor:publish', ['--tag' => 'config']);
-
-        $this->line('');
         $this->comment('Publishing controllers...');
 
         $this->call('vendor:publish', ['--tag' => 'controllers']);

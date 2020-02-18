@@ -47,7 +47,7 @@ own remember token. This way, you can revoke a session without affecting the oth
 - It works with all the session drivers supported by Laravel, except of course the cookie driver which saves
 the sessions only in the client browser and the array driver.
 
-- To track API tokens, it supports the official **Laravel Passport (>= 7.5)** and **Laravel Airlock (v0.2.0)** packages.
+- To track API tokens, it supports the official **Laravel Passport (>= 7.5)** and **Laravel Airlock (v0.2)** packages.
 
 - In case you want to use Passport with multiple user providers, this package works with the
 `sfelix-martins/passport-multiauth` package (see [here](https://github.com/sfelix-martins/passport-multiauth)).

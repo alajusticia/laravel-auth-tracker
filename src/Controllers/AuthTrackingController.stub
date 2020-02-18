@@ -39,7 +39,7 @@ class AuthTrackingController extends Controller
      * Destroy a session / Revoke an access token by its ID.
      *
      * @param Request $request
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function logoutById(Request $request, $id)
     {
@@ -51,7 +51,8 @@ class AuthTrackingController extends Controller
     /**
      * Destroy all sessions / Revoke all access tokens.
      *
-     * @return mixed
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function logoutAll(Request $request)
     {
@@ -63,7 +64,8 @@ class AuthTrackingController extends Controller
     /**
      * Destroy all sessions / Revoke all access tokens, except the current one.
      *
-     * @return mixed
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function logoutOthers(Request $request)
     {
@@ -72,6 +74,9 @@ class AuthTrackingController extends Controller
         return $this->redirectToLoginsList();
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function redirectToLoginsList()
     {
         return redirect()->route('login.list')->with([
