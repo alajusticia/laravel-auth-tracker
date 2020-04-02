@@ -5,7 +5,7 @@ namespace ALajusticia\AuthTracker\Traits;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Laravel\Airlock\PersonalAccessToken;
+use Laravel\Sanctum\PersonalAccessToken;
 
 trait ManagesLogins
 {
@@ -55,12 +55,12 @@ trait ManagesLogins
     }
 
     /**
-     * Revoke the given Airlock personal access token ids.
+     * Revoke the given Sanctum personal access token ids.
      *
      * @param Collection|array|int $personalAccessTokenIds
      * @return void
      */
-    protected function revokeAirlockTokens($personalAccessTokenIds)
+    protected function revokeSanctumTokens($personalAccessTokenIds)
     {
         // Support for collections
         if ($personalAccessTokenIds instanceof Collection) {

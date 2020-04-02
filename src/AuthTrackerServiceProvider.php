@@ -63,7 +63,7 @@ class AuthTrackerServiceProvider extends ServiceProvider
         // Register event subscribers
         Event::subscribe('ALajusticia\AuthTracker\Listeners\AuthEventSubscriber');
         Event::subscribe('ALajusticia\AuthTracker\Listeners\PassportEventSubscriber');
-        Event::subscribe('ALajusticia\AuthTracker\Listeners\AirlockEventSubscriber');
+        Event::subscribe('ALajusticia\AuthTracker\Listeners\SanctumEventSubscriber');
 
         // Register route macros
         Route::mixin(new RouteMacros);

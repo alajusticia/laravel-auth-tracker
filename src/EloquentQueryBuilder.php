@@ -28,8 +28,8 @@ class EloquentQueryBuilder extends ExpirableEloquentQueryBuilder
             // Revoke Passport tokens
             $this->revokePassportTokens($logins->pluck('oauth_access_token_id')->filter());
 
-            // Revoke Airlock tokens
-            $this->revokeAirlockTokens($logins->pluck('personal_access_token_id')->filter());
+            // Revoke Sanctum tokens
+            $this->revokeSanctumTokens($logins->pluck('personal_access_token_id')->filter());
 
             // Delete logins
             return $this->delete();

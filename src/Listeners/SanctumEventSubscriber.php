@@ -7,7 +7,7 @@ use ALajusticia\AuthTracker\Factories\LoginFactory;
 use ALajusticia\AuthTracker\RequestContext;
 use Carbon\Carbon;
 
-class AirlockEventSubscriber
+class SanctumEventSubscriber
 {
     public function handlePersonalAccessTokenCreation(PersonalAccessTokenCreated $event)
     {
@@ -23,7 +23,7 @@ class AirlockEventSubscriber
             $login = LoginFactory::build($event, $context);
 
             // Set the expiration date
-            if ($minutes = config('airlock.expiration')) {
+            if ($minutes = config('sanctum.expiration')) {
                 $login->expiresAt(Carbon::now()->addMinutes($minutes));
             }
 
@@ -54,7 +54,7 @@ class AirlockEventSubscriber
     {
         $events->listen(
             'ALajusticia\AuthTracker\Events\PersonalAccessTokenCreated',
-            'ALajusticia\AuthTracker\Listeners\AirlockEventSubscriber@handlePersonalAccessTokenCreation'
+            'ALajusticia\AuthTracker\Listeners\SanctumEventSubscriber@handlePersonalAccessTokenCreation'
         );
     }
 }

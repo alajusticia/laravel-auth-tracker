@@ -4,7 +4,7 @@ namespace ALajusticia\AuthTracker\Tests;
 
 use ALajusticia\AuthTracker\Traits\AuthTracking;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Airlock\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {

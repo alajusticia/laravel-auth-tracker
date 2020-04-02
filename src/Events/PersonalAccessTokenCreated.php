@@ -3,8 +3,8 @@
 namespace ALajusticia\AuthTracker\Events;
 
 use Illuminate\Queue\SerializesModels;
-use Laravel\Airlock\NewAccessToken;
-use Laravel\Airlock\PersonalAccessToken;
+use Laravel\Sanctum\NewAccessToken;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class PersonalAccessTokenCreated
 {

@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use ALajusticia\AuthTracker\Tests\AirlockUser;
+use ALajusticia\AuthTracker\Tests\SanctumUser;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(AirlockUser::class, function (Faker $faker) {
+$factory->define(SanctumUser::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,

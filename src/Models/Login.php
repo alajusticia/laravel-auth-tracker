@@ -111,9 +111,9 @@ class Login extends Model
 
             return $this->oauth_access_token_id === request()->user()->token()->id;
 
-        } elseif ($this->personal_access_token_id && request()->user()->isAuthenticatedByAirlock()) {
+        } elseif ($this->personal_access_token_id && request()->user()->isAuthenticatedBySanctum()) {
 
-            // Airlock
+            // Sanctum
 
             return $this->personal_access_token_id === request()->user()->currentAccessToken()->id;
         }
@@ -141,8 +141,8 @@ class Login extends Model
 
         } elseif ($this->personal_access_token_id) {
 
-            // Revoke Airlock token
-            $this->revokeAirlockTokens($this->personal_access_token_id);
+            // Revoke Sanctum token
+            $this->revokeSanctumTokens($this->personal_access_token_id);
 
         }
 

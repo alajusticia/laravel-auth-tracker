@@ -7,7 +7,7 @@ use ALajusticia\Expirable\ExpirableServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Laravel\Airlock\AirlockServiceProvider;
+use Laravel\Sanctum\SanctumServiceProvider;
 use Laravel\Passport\Passport;
 use Laravel\Passport\PassportServiceProvider;
 
@@ -46,7 +46,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             AuthTrackerServiceProvider::class,
             ExpirableServiceProvider::class,
             PassportServiceProvider::class,
-            AirlockServiceProvider::class,
+            SanctumServiceProvider::class,
         ];
     }
 

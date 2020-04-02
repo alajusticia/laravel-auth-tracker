@@ -34,7 +34,7 @@ trait AuthTracking
                         ->where('oauth_access_token_id', $this->token()->id)
                         ->first();
 
-        } elseif ($this->isAuthenticatedByAirlock()) {
+        } elseif ($this->isAuthenticatedBySanctum()) {
 
             return $this->logins()
                         ->where('personal_access_token_id', $this->currentAccessToken()->id)
@@ -86,7 +86,7 @@ trait AuthTracking
                         })
                         ->revoke();
 
-        } elseif ($this->isAuthenticatedByAirlock()) {
+        } elseif ($this->isAuthenticatedBySanctum()) {
 
             return $this->logins()
                         ->where(function (Builder $query) {
@@ -132,13 +132,13 @@ trait AuthTracking
     }
 
     /**
-     * Check for authentication via Airlock.
+     * Check for authentication via Sanctum.
      *
      * @return bool
      */
-    public function isAuthenticatedByAirlock()
+    public function isAuthenticatedBySanctum()
     {
-        return in_array('Laravel\Airlock\HasApiTokens', class_uses($this))
+        return in_array('Laravel\Sanctum\HasApiTokens', class_uses($this))
             && ! is_null($this->currentAccessToken());
     }
 }
