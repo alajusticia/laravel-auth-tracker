@@ -79,8 +79,6 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function setRoutes()
     {
-        Auth::routes();
-
         Passport::routes();
 
         Route::prefix('api')->middleware(['api', 'auth:api'])->group(function () {
