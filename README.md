@@ -1,6 +1,6 @@
 # Laravel Auth Tracker
 
-#### Track and manage sessions, Passport tokens and Airlock tokens in Laravel.
+#### Track and manage sessions, Passport tokens and Sanctum tokens in Laravel.
 
 This package allows you to track separately each login (session or token), attaching informations by parsing the
 User-Agent and saving the IP address.
@@ -20,7 +20,7 @@ own remember token. This way, you can revoke a session without affecting the oth
   * [Choose and install a user-agent parser](#choose-and-install-a-user-agent-parser)
   * [Configure the user provider](#configure-the-user-provider)
   * [Generate the scaffolding](#generate-the-scaffolding)
-  * [Laravel Airlock](#laravel-airlock)
+  * [Laravel Sanctum](#laravel-sanctum)
 * [Usage](#usage)
   * [Retrieving the logins](#retrieving-the-logins)
     * [Get all the logins](#get-all-the-logins)
@@ -47,7 +47,7 @@ own remember token. This way, you can revoke a session without affecting the oth
 - It works with all the session drivers supported by Laravel, except of course the cookie driver which saves
 the sessions only in the client browser and the array driver.
 
-- To track API tokens, it supports the official **Laravel Passport (>= 7.5)** and **Laravel Airlock (v0.2)** packages.
+- To track API tokens, it supports the official **Laravel Passport (>= 7.5)** and **Laravel Sanctum (v2.1.0)** packages.
 
 - In case you want to use Passport with multiple user providers, this package works with the
 `sfelix-martins/passport-multiauth` package (see [here](https://github.com/sfelix-martins/passport-multiauth)).
@@ -153,19 +153,19 @@ This command will:
 
 Now, log in with a tracked user and go to `/security`. You will find a page to manage the logins! 
 
-### Laravel Airlock
+### Laravel Sanctum
 
-In the actual version (0.2.0) of the Laravel Airlock package, there is no event allowing us to know when
+In the actual version (2.1.0) of the Laravel Sanctum package, there is no event allowing us to know when
 an API token is created.
 
-If you are issuing API tokens with Laravel Airlock and want to enable auth tracking,
+If you are issuing API tokens with Laravel Sanctum and want to enable auth tracking,
 you will have to dispatch an event provided by the Auth Tracker.
 
 Dispatch the `ALajusticia\AuthTracker\Events\PersonalAccessTokenCreated` event passing the personal access token
-newly created by the `createToken` method of the Laravel Airlock trait.
+newly created by the `createToken` method of the Laravel Sanctum trait.
 
-Based on the [example](https://github.com/laravel/airlock#authenticating-mobile-applications) provided by
-the Laravel Airlock documentation, it might look like this:
+Based on the [example](https://laravel.com/docs/7.x/sanctum#issuing-mobile-api-tokens) provided by
+the Laravel Sanctum documentation, it might look like this:
 
 ```php
 use ALajusticia\AuthTracker\Events\PersonalAccessTokenCreated;
@@ -174,7 +174,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-Route::post('/airlock/token', function (Request $request) {
+Route::post('/sanctum/token', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
         'password' => 'required',
