@@ -8,9 +8,9 @@ User-Agent and saving the IP address.
 Using a supported provider or creating your own custom providers, you can collect even more informations with
 an IP address lookup to get, for example, the geolocation.
 
-You can revoke every single login or all at once. In case of sessions with remember tokens, every session has its
-own remember token. This way, you can revoke a session without affecting the others. It solves this
-[issue](https://github.com/laravel/ideas/issues/971).
+You can revoke every single session/token or all at once.
+In case of sessions with remember tokens, every session has its own remember token.
+This way, you can revoke a session without affecting the others.
 
 * [Compatibility](#compatibility)
 * [Installation](#installation)
