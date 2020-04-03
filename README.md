@@ -42,12 +42,12 @@ own remember token. This way, you can revoke a session without affecting the oth
 
 ## Compatibility
 
-- This package has been tested with **Laravel >= 5.8**.
+- This package has been tested with **Laravel 5.8, 6.x and 7.x**.
 
 - It works with all the session drivers supported by Laravel, except of course the cookie driver which saves
 the sessions only in the client browser and the array driver.
 
-- To track API tokens, it supports the official **Laravel Passport (>= 7.5)** and **Laravel Sanctum (v2.1.0)** packages.
+- To track API tokens, it supports the official **Laravel Passport (>= 7.5)** and **Laravel Sanctum (v2)** packages.
 
 - In case you want to use Passport with multiple user providers, this package works with the
 `sfelix-martins/passport-multiauth` package (see [here](https://github.com/sfelix-martins/passport-multiauth)).
