@@ -23,11 +23,6 @@ class AuthTrackerServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../config/auth_tracker.php', 'auth_tracker'
         );
-
-        // Register commands
-        $this->commands([
-            Commands\InstallCommand::class,
-        ]);
     }
 
     /**
@@ -42,16 +37,6 @@ class AuthTrackerServiceProvider extends ServiceProvider
             __DIR__.'/../config/auth_tracker.php' => config_path('auth_tracker.php'),
         ], 'config');
 
-        // Publish controllers
-        $this->publishes([
-            __DIR__.'/Controllers/AuthTrackingController.stub' => app_path('Http/Controllers/Auth/AuthTrackingController.php'),
-        ], 'controllers');
-
-        // Publish views
-        $this->publishes([
-            __DIR__.'/../resources/views/auth/list.blade.php' => base_path('resources/views/auth/list.blade.php'),
-        ], 'views');
-
         // Load migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
@@ -64,9 +49,6 @@ class AuthTrackerServiceProvider extends ServiceProvider
         Event::subscribe('ALajusticia\AuthTracker\Listeners\AuthEventSubscriber');
         Event::subscribe('ALajusticia\AuthTracker\Listeners\PassportEventSubscriber');
         Event::subscribe('ALajusticia\AuthTracker\Listeners\SanctumEventSubscriber');
-
-        // Register route macros
-        Route::mixin(new RouteMacros);
 
         // Register Blade directives
         Blade::if('tracked', function () {

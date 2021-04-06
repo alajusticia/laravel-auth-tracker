@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateLoginsTable extends Migration
 {
@@ -14,7 +14,7 @@ class CreateLoginsTable extends Migration
     public function up()
     {
         Schema::create(config('auth_tracker.table_name'), function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->timestamps();
             $table->morphs('authenticatable');
             $table->string('user_agent')->nullable();
