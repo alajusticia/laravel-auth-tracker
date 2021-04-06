@@ -12,8 +12,12 @@ class PassportTest extends TestCase
     {
         $this->passwordGrantClient = Client::where('password_client', true)->first();
 
+        // Ensure that the password grant client has the right provider
+        $this->passwordGrantClient->provider = 'passport_users';
+        $this->passwordGrantClient->save();
+
         // Create and authenticate user 1
-        $response = $this->authenticate(factory(PassportUser::class)->create());
+        $response = $this->authenticate(PassportUser::factory()->create());
         $response->assertOk();
 
         $accessToken = $response->json('access_token');

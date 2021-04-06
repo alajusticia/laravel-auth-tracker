@@ -9,7 +9,7 @@ class SessionTest extends TestCase
     public function test_auth_with_session()
     {
         // Create user
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         // Authenticate user to dispatch login event
         Auth::login($user);

@@ -22,6 +22,8 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
+        $this->loadLaravelMigrations();
+
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
         $this->artisan('migrate')->run();
@@ -29,8 +31,6 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
         $this->artisan('passport:install')->run();
 
         $this->setRoutes();
-
-        $this->withFactories(__DIR__.'/database/factories');
     }
 
     /**
