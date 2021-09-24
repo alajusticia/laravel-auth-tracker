@@ -6,6 +6,7 @@ use ALajusticia\AuthTracker\Factories\IpProviderFactory;
 use ALajusticia\AuthTracker\Factories\ParserFactory;
 use ALajusticia\AuthTracker\Interfaces\IpProvider;
 use ALajusticia\AuthTracker\Interfaces\UserAgentParser;
+use Illuminate\Support\Facades\Request;
 
 class RequestContext
 {
@@ -42,8 +43,8 @@ class RequestContext
         // Initialize the IP provider
         $this->ipProvider = IpProviderFactory::build(config('auth_tracker.ip_lookup.provider'));
 
-        $this->userAgent = request()->userAgent();
-        $this->ip = request()->ip();
+        $this->userAgent = Request::userAgent();
+        $this->ip = Request::ip();
     }
 
     /**

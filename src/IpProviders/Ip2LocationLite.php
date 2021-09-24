@@ -4,6 +4,7 @@ namespace ALajusticia\AuthTracker\IpProviders;
 
 use ALajusticia\AuthTracker\Interfaces\IpProvider;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 
 class Ip2LocationLite implements IpProvider
 {
@@ -17,12 +18,12 @@ class Ip2LocationLite implements IpProvider
      */
     public function __construct()
     {
-        $table = filter_var(request()->ip(), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)
+        $table = filter_var(Request::ip(), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)
                  ? config('auth_tracker.ip_lookup.ip2location.ipv6_table')
                  : config('auth_tracker.ip_lookup.ip2location.ipv4_table');
 
         $this->result = DB::table($table)
-                          ->whereRaw('INET_ATON(?) <= ip_to', [request()->ip()])
+                          ->whereRaw('INET_ATON(?) <= ip_to', [Request::ip()])
                           ->first();
     }
 

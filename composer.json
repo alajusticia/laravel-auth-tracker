@@ -12,7 +12,12 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "alajusticia/laravel-expirable": "^1.4"
+        "alajusticia/laravel-expirable": "^1.5",
+        "guzzlehttp/guzzle": "^7.3",
+        "illuminate/database": "^7.0|^8.0",
+        "illuminate/queue": "^7.0|^8.0",
+        "illuminate/support": "^7.0|^8.0",
+        "nesbot/carbon": "^2.53"
     },
     "require-dev": {
         "mockery/mockery": "^1.4",

@@ -7,6 +7,7 @@ use ALajusticia\AuthTracker\Macros\RouteMacros;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -52,7 +53,7 @@ class AuthTrackerServiceProvider extends ServiceProvider
 
         // Register Blade directives
         Blade::if('tracked', function () {
-            return method_exists(request()->user(), 'logins');
+            return method_exists(Request::user(), 'logins');
         });
         Blade::if('ipLookup', function () {
             return IpProviderFactory::ipLookupEnabled();

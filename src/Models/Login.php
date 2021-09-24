@@ -2,7 +2,7 @@
 
 namespace ALajusticia\AuthTracker\Models;
 
-use ALajusticia\AuthTracker\EloquentQueryBuilder;
+use ALajusticia\AuthTracker\Scopes\LoginsScope;
 use ALajusticia\AuthTracker\Traits\ManagesLogins;
 use ALajusticia\Expirable\Traits\Expirable;
 use Illuminate\Database\Eloquent\Model;
@@ -10,18 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Login extends Model
 {
-    use Expirable, ManagesLogins, SoftDeletes;
+    use Expirable;
+    use ManagesLogins;
+    use SoftDeletes;
 
     const EXPIRES_AT = 'expires_at';
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'expires_at'
-    ];
 
     /**
      * The attributes that aren't mass assignable.
@@ -64,6 +57,16 @@ class Login extends Model
         $this->setTable(config('auth_tracker.table_name'));
 
         parent::__construct($attributes);
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new LoginsScope);
     }
 
     /**
@@ -148,16 +151,5 @@ class Login extends Model
 
         // Delete login
         return $this->delete();
-    }
-
-    /**
-     * Create a new Eloquent query builder for the model.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder|static
-     */
-    public function newEloquentBuilder($query)
-    {
-        return new EloquentQueryBuilder($query);
     }
 }

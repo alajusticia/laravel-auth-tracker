@@ -4,6 +4,7 @@ namespace ALajusticia\AuthTracker\Listeners;
 
 use ALajusticia\AuthTracker\Factories\LoginFactory;
 use ALajusticia\AuthTracker\RequestContext;
+use Illuminate\Support\Facades\Request;
 use Laravel\Passport\Events\AccessTokenCreated;
 use Laravel\Passport\Token;
 
@@ -33,7 +34,7 @@ class PassportEventSubscriber
             // Attach the login to the user and save it
             $user->logins()->save($login);
 
-            if (request()->input('grant_type') !== 'refresh_token') {
+            if (Request::input('grant_type') !== 'refresh_token') {
 
                 event(new \ALajusticia\AuthTracker\Events\Login($user, $context));
             }

@@ -207,7 +207,7 @@ request()->user()->logout(); // Revoke the current login
 
 #### Revoke all the logins
 
-We can destroy all the sessions and revoke all the Passport tokens by using the `logoutAll` method.
+We can destroy all the sessions and revoke all the Passport/Sanctum tokens by using the `logoutAll` method.
 Useful when, for example, the user's password is modified and we want to logout all the devices.
 
 This feature destroys all sessions, even those remembered.
@@ -219,7 +219,7 @@ request()->user()->logoutAll();
 #### Revoke all the logins except the current one
 
 The `logoutOthers` method acts in the same way as the `logoutAll` method except that it keeps the current
-session / Passport token alive.
+session or Passport/Sanctum token alive.
 
 ```php
 request()->user()->logoutOthers();
@@ -301,7 +301,8 @@ Let's see an example of an IP lookup provider with the built-in `IpApi` provider
 ```php
 use ALajusticia\AuthTracker\Interfaces\IpProvider;
 use ALajusticia\AuthTracker\Traits\MakesApiCalls;
-use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Request as GuzzleRequest;
+use Illuminate\Support\Facades\Request;
 
 class IpApi implements IpProvider
 {
@@ -310,11 +311,11 @@ class IpApi implements IpProvider
     /**
      * Get the Guzzle request.
      *
-     * @return Request
+     * @return GuzzleRequest
      */
     public function getRequest()
     {
-        return new Request('GET', 'http://ip-api.com/json/'.request()->ip().'?fields=25');
+        return new GuzzleRequest('GET', 'http://ip-api.com/json/' . Request::ip() . '?fields=25');
     }
 
     /**

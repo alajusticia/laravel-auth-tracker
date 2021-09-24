@@ -9,11 +9,23 @@ use Carbon\Carbon;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Recaller;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 
 class AuthEventSubscriber
 {
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     public function handleSuccessfulLogin(LoginEvent $event)
     {
         if ($this->tracked($event->user)) {
@@ -75,11 +87,11 @@ class AuthEventSubscriber
      */
     protected function recaller()
     {
-        if (is_null(request())) {
+        if (is_null($this->request)) {
             return null;
         }
 
-        if ($recaller = request()->cookies->get(Auth::guard()->getRecallerName())) {
+        if ($recaller = Cookie::get(Auth::guard()->getRecallerName())) {
             return new Recaller($recaller);
         }
 

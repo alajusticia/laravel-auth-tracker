@@ -7,8 +7,14 @@ use Jenssegers\Agent\Agent as Parser;
 
 class Agent implements UserAgentParser
 {
+    /**
+     * @var Parser
+     */
     protected $parser;
 
+    /**
+     * Agent constructor.
+     */
     public function __construct()
     {
         $this->parser = new Parser();
@@ -17,28 +23,26 @@ class Agent implements UserAgentParser
     /**
      * Get the device name.
      *
-     * @return string
+     * @return string|null
      */
     public function getDevice()
     {
-        return $this->parser->device();
+        $device = $this->parser->device();
+
+        return $device && $device !== 'WebKit' ? $device : null;
     }
 
     /**
      * Get the device type.
      *
-     * @return string
+     * @return string|null
      */
     public function getDeviceType()
     {
         if ($this->parser->isDesktop()) {
-            return 'Desktop';
-        } elseif ($this->parser->isTablet()) {
-            return 'Tablet';
-        } elseif ($this->parser->isPhone()) {
-            return 'Phone';
-        } else if ($this->parser->isMobile()) {
-            return 'Mobile';
+            return 'desktop';
+        } elseif ($this->parser->isMobile()) {
+            return $this->parser->isTablet() ? 'tablet' : ($this->parser->isPhone() ? 'phone' : 'mobile');
         }
 
         return null;
@@ -47,20 +51,20 @@ class Agent implements UserAgentParser
     /**
      * Get the platform name.
      *
-     * @return string
+     * @return string|null
      */
     public function getPlatform()
     {
-        return $this->parser->platform();
+        return $this->parser->platform() ?: null;
     }
 
     /**
      * Get the browser name.
      *
-     * @return string
+     * @return string|null
      */
     public function getBrowser()
     {
-        return $this->parser->browser();
+        return $this->parser->browser() ?: null;
     }
 }

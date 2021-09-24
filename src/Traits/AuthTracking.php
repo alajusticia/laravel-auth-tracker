@@ -12,7 +12,7 @@ trait AuthTracking
      */
     public function logins()
     {
-        return $this->morphMany('ALajusticia\AuthTracker\Models\Login', 'authenticatable');
+        return $this->morphMany(Login::class, 'authenticatable');
     }
 
     /**
@@ -56,7 +56,7 @@ trait AuthTracking
     {
         $login = $loginId ? $this->logins()->find($loginId) : $this->currentLogin();
 
-        return $login ? (! empty($login->revoke())) : false;
+        return $login ? !empty($login->revoke()) : false;
     }
 
     /**

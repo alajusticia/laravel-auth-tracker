@@ -3,47 +3,62 @@
 namespace ALajusticia\AuthTracker\Parsers;
 
 use ALajusticia\AuthTracker\Interfaces\UserAgentParser;
+use Illuminate\Support\Facades\Request;
 use WhichBrowser\Parser;
 
 class WhichBrowser implements UserAgentParser
 {
+    /**
+     * @var Parser
+     */
     protected $parser;
 
+    /**
+     * WhichBrowser constructor.
+     */
     public function __construct()
     {
-        $this->parser = new Parser(request()->userAgent());
+        $this->parser = new Parser(Request::userAgent());
     }
 
     /**
      * Get the device name.
      *
-     * @return string
+     * @return string|null
      */
     public function getDevice()
     {
-        return ! empty($this->parser->device->toString()) ?
-            $this->parser->device->toString() :
-            $this->parser->device->getManufacturer().' '.$this->parser->device->getModel();
+        return trim($this->parser->device->toString()) ?: $this->getDeviceByManufacturerAndModel();
+    }
+
+    /**
+     * Get the device name by manufacturer and model.
+     *
+     * @return string|null
+     */
+    protected function getDeviceByManufacturerAndModel()
+    {
+        return trim($this->parser->device->getManufacturer().' '.$this->parser->device->getModel()) ?: null;
     }
 
     /**
      * Get the device type.
      *
-     * @return string
+     * @return string|null
      */
     public function getDeviceType()
     {
-        return ucfirst($this->parser->device->type);
+        return trim($this->parser->device->type) ?: null;
     }
 
     /**
      * Get the platform name.
      *
-     * @return string
+     * @return string|null
      */
     public function getPlatform()
     {
-        return $this->parser->os->toString();
+        return trim($this->parser->os->toString()) ?: null;
     }
 
     /**
