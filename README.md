@@ -39,9 +39,9 @@ This way, you can revoke a session without affecting the others.
 
 ## Compatibility
 
-- The v3 of this package has been tested with **Laravel 8.x**.
+- For now, this package isn't compatible with Laravel 8. I'm working on a v3 to support Laravel 8, meanwhile if your project is only based on Laravel Sanctum authentication you can install the [Laravel Sanctum Tracker](https://github.com/alajusticia/laravel-sanctum-tracker).
 
-- For previous versions of Laravel (v5.8, v6 and v7), use the v2.
+- For previous versions of Laravel (v5.8, v6 and v7), use the [v2](https://github.com/alajusticia/laravel-auth-tracker/tree/v2).
 
 - It works with all the session drivers supported by Laravel, except of course the cookie driver which saves
 the sessions only in the client browser and the array driver.
@@ -49,6 +49,8 @@ the sessions only in the client browser and the array driver.
 - To track API tokens, it supports the official **Laravel Passport (>= 7.5)** and **Laravel Sanctum (v2)** packages.
 
 ## Installation
+
+**/!\ This documentation is for the v3 (WIP). The documentation for the latest release (v2) is available here: [https://github.com/alajusticia/laravel-auth-tracker/tree/v2](https://github.com/alajusticia/laravel-auth-tracker/tree/v2)**
 
 Install the package with composer:
 
