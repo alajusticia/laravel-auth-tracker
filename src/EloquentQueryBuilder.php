@@ -3,9 +3,9 @@
 namespace ALajusticia\AuthTracker;
 
 use ALajusticia\AuthTracker\Traits\ManagesLogins;
-use ALajusticia\Expirable\ExpirableEloquentQueryBuilder;
+use Illuminate\Database\Eloquent\Builder;
 
-class EloquentQueryBuilder extends ExpirableEloquentQueryBuilder
+class EloquentQueryBuilder extends Builder
 {
     use ManagesLogins;
 
