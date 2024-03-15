@@ -1,5 +1,7 @@
 # Laravel Auth Tracker
 
+> ⚠️ This package is now archived. Use [Laravel Logins](https://github.com/alajusticia/laravel-logins) instead.
+
 #### Track and manage sessions, Passport tokens and Sanctum tokens in Laravel.
 
 This package allows you to track separately each login (session or token), attaching informations by parsing the
@@ -39,7 +41,7 @@ This way, you can revoke a session without affecting the others.
 
 ## Compatibility
 
-- For now, this package isn't compatible with Laravel 8. I'm working on a v3 to support Laravel 8, meanwhile if your project is only based on Laravel Sanctum authentication you can install the [Laravel Sanctum Tracker](https://github.com/alajusticia/laravel-sanctum-tracker).
+- For recent Laravel versions, use [Laravel Logins](https://github.com/alajusticia/laravel-logins).
 
 - For previous versions of Laravel (v5.8, v6 and v7), use the [v2](https://github.com/alajusticia/laravel-auth-tracker/tree/v2).
 
